@@ -1,0 +1,22 @@
+﻿@page "/"
+@using RedisDemo.Interface
+
+@inject NavigationManager NavManager
+@inject IRedisCaching redisCache
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        string a = await redisCache.GetRecordsFromRedis("currentURL");
+        if (a == null || a =="" )
+        {
+            NavManager.NavigateTo("/home");
+        }
+        else
+        {
+
+            NavManager.NavigateTo(a);
+        }
+        
+    }
+}
